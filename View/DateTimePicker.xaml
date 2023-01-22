@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestApplication.View.DateTimePicker">
-    <HorizontalStackLayout Padding="10" Spacing="10">
+    <HorizontalStackLayout Spacing="10">
         <DatePicker x:Name="datePicker" DateSelected="DatePicker_DateSelected" />
         <TimePicker x:Name="timePicker" Unfocused="TimePicker_Unfocused" />
     </HorizontalStackLayout>

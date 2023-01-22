@@ -4,9 +4,84 @@
              x:Class="TestApplication.View.TimeTrackerPage"
              Title="TimeTrackerPage"
              xmlns:local="clr-namespace:TestApplication.View">
-    <StackLayout>
-    <local:DateTimePicker x:Name="dateTimePicker" SelectedDateTime="{Binding SelectedDateTime, Mode=TwoWay}"/>
-    <Label Text="{Binding SelectedDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}"/>
-    <Button Text="Show selected date and time" Clicked="Button_Clicked"/>
-    </StackLayout>
+    <ScrollView>
+        <Grid RowDefinitions="*, Auto"
+          ColumnDefinitions="*"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10">
+            <Frame BorderColor="#939598" Padding="10">
+                <StackLayout Margin="10" Spacing="20">
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="First Arrival" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="firstArrival" SelectedDateTime="{Binding FirstArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                             <Label HorizontalOptions="Center" Text="{Binding FirstArrival, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout  Margin="5" >
+                            <Label Text="First Departure" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="firstDeparture" SelectedDateTime="{Binding FirstDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout  Margin="5">
+                            <Label Text="Second Arrival" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="secondArrival" SelectedDateTime="{Binding SecondArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Second Departure" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="secondDeparture" SelectedDateTime="{Binding SecondDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Third Arrival" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="thirdArrival" SelectedDateTime="{Binding ThirdArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Third Departure" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="thiedDeparture" SelectedDateTime="{Binding ThirdDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Fourth Arrival" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="fourthArrival" SelectedDateTime="{Binding FourthArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Fourth Departure" Margin="0,0,0,15"/>
+                            <HorizontalStackLayout>
+                                <local:DateTimePicker x:Name="fourthDeparture" SelectedDateTime="{Binding FourthDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame>
+                        <Label Text="{Binding TotalHours, StringFormat='Total Hours: {0:h\\:mm}'}"/>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
 </ContentPage>

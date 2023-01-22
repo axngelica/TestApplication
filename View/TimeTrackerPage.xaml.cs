@@ -10,9 +10,9 @@ public partial class TimeTrackerPage : ContentPage
 		BindingContext = new TimeTrackerViewModel();
 	}
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private void DateTimePicker_SelectedDateTimeChanged(object sender, EventArgs e)
     {
-        var selectedDateTime = dateTimePicker.SelectedDateTime;
-        System.Diagnostics.Debug.WriteLine("Selected Date Time: " + selectedDateTime);
+        var viewModel = BindingContext as TimeTrackerViewModel;
+        viewModel.FirstArrival = firstArrival.SelectedDateTime;
     }
 }
