@@ -9,19 +9,19 @@ public partial class DateTimePicker : ContentView, INotifyPropertyChanged
 		InitializeComponent();
 	}
 
-    public static readonly BindableProperty SelectedDateTimeProperty =
-    BindableProperty.Create(nameof(SelectedDateTime), typeof(DateTime), typeof(DateTimePicker), default(DateTime), BindingMode.TwoWay);
+    public static readonly BindableProperty DateTimeProperty =
+    BindableProperty.Create(nameof(DateTime), typeof(DateTime), typeof(DateTimePicker), default(DateTime), BindingMode.TwoWay);
 
-    public event EventHandler SelectedDateTimeChanged;
+    public event EventHandler DateTimeUpdated;
 
-    public DateTime SelectedDateTime
+    public DateTime DateTime
     {
-        get => (DateTime)GetValue(SelectedDateTimeProperty);
+        get => (DateTime)GetValue(DateTimeProperty);
         set
         {
-            SetValue(SelectedDateTimeProperty, value);
-            OnPropertyChanged("SelectedDateTime");
-            SelectedDateTimeChanged?.Invoke(this, EventArgs.Empty);
+            SetValue(DateTimeProperty, value);
+            OnPropertyChanged("DateTime");
+            DateTimeUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -29,18 +29,18 @@ public partial class DateTimePicker : ContentView, INotifyPropertyChanged
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        SelectedDateTimeChanged?.Invoke(this, EventArgs.Empty);
+        DateTimeUpdated?.Invoke(this, EventArgs.Empty);
     }
     private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        SelectedDateTime = new DateTime(e.NewDate.Year, e.NewDate.Month, e.NewDate.Day);
-        SelectedDateTimeChanged?.Invoke(this, EventArgs.Empty);
+        DateTime = new DateTime(e.NewDate.Year, e.NewDate.Month, e.NewDate.Day);
+        DateTimeUpdated?.Invoke(this, EventArgs.Empty);
     }
 
     private void TimePicker_Unfocused(object sender, FocusEventArgs e)
     {
-        SelectedDateTime = new DateTime(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, timePicker.Time.Hours, timePicker.Time.Minutes, 0);
-        SelectedDateTimeChanged?.Invoke(this, EventArgs.Empty);
+        DateTime = new DateTime(DateTime.Year, DateTime.Month, DateTime.Day, timePicker.Time.Hours, timePicker.Time.Minutes, 0);
+        DateTimeUpdated?.Invoke(this, EventArgs.Empty);
     }
 
 }

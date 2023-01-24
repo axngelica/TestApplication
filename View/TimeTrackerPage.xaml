@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestApplication.View.TimeTrackerPage"
              Title="TimeTrackerPage"
-             xmlns:local="clr-namespace:TestApplication.View">
+             xmlns:local="clr-namespace:TestApplication.View"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <ScrollView>
         <Grid RowDefinitions="*, Auto"
           ColumnDefinitions="*"
@@ -16,7 +17,7 @@
                         <VerticalStackLayout Margin="5" Spacing="5">
                             <Label Text="First Arrival" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="firstArrival" SelectedDateTime="{Binding FirstArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="firstArrival" DateTime="{Binding FirstArrival, Mode=TwoWay,TargetNullValue=null}" />
                             </HorizontalStackLayout>
                              <Label HorizontalOptions="Center" Text="{Binding FirstArrival, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}"/>
                         </VerticalStackLayout>
@@ -25,7 +26,7 @@
                         <VerticalStackLayout  Margin="5" >
                             <Label Text="First Departure" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="firstDeparture" SelectedDateTime="{Binding FirstDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="firstDeparture" DateTime="{Binding FirstDeparture, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -33,7 +34,7 @@
                         <VerticalStackLayout  Margin="5">
                             <Label Text="Second Arrival" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="secondArrival" SelectedDateTime="{Binding SecondArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="secondArrival" DateTime="{Binding SecondArrival, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -41,7 +42,7 @@
                         <VerticalStackLayout Margin="5">
                             <Label Text="Second Departure" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="secondDeparture" SelectedDateTime="{Binding SecondDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="secondDeparture" DateTime="{Binding SecondDeparture, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -49,7 +50,7 @@
                         <VerticalStackLayout Margin="5">
                             <Label Text="Third Arrival" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="thirdArrival" SelectedDateTime="{Binding ThirdArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="thirdArrival" DateTime="{Binding ThirdArrival, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -57,7 +58,7 @@
                         <VerticalStackLayout Margin="5">
                             <Label Text="Third Departure" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="thiedDeparture" SelectedDateTime="{Binding ThirdDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="thiedDeparture" DateTime="{Binding ThirdDeparture, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -65,7 +66,7 @@
                         <VerticalStackLayout Margin="5">
                             <Label Text="Fourth Arrival" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="fourthArrival" SelectedDateTime="{Binding FourthArrival, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="fourthArrival" DateTime="{Binding FourthArrival, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -73,15 +74,120 @@
                         <VerticalStackLayout Margin="5">
                             <Label Text="Fourth Departure" Margin="0,0,0,15"/>
                             <HorizontalStackLayout>
-                                <local:DateTimePicker x:Name="fourthDeparture" SelectedDateTime="{Binding FourthDeparture, Mode=TwoWay}" SelectedDateTimeChanged="DateTimePicker_SelectedDateTimeChanged"/>
+                                <local:DateTimePicker x:Name="fourthDeparture" DateTime="{Binding FourthDeparture, Mode=TwoWay}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
-                    <Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
                         <Label Text="{Binding TotalHours, StringFormat='Total Hours: {0:h\\:mm}'}"/>
+                        <Label Text="Combined total for all arrivals / departures" TextColor="LightGray"></Label>
+                        </VerticalStackLayout>
                     </Frame>
                 </StackLayout>
             </Frame>
+            <Frame BorderColor="#939598" Grid.Row="1" Padding="10">
+            <StackLayout Margin="10" Spacing="20">
+                <Frame BorderColor="LightGray" CornerRadius="10">
+                    <VerticalStackLayout Margin="5" Spacing="5">
+                        <Label Text="Total Mileage"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter mileage" x:Name="totalMileage" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumDecimalPlaces="1"
+                                        />
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="Total Travel Time (minutes)"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter travel time" x:Name="travelTime" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumDecimalPlaces="1"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="Total Parking/ Tolls"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter total parking/tolls" x:Name="parkingTolls" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumDecimalPlaces="1"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="Total Lab Time (minutes)"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter lab time" x:Name="labTime" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumValue="999"
+                                        MaximumDecimalPlaces="1"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="Total Reinspection Time (minutes)"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter total reinspection time" x:Name="reinspectionTime" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumDecimalPlaces="1"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame BorderColor="LightGray" CornerRadius="10">
+                        <VerticalStackLayout Margin="5" Spacing="5">
+                            <Label Text="Total Standby Time"/>
+                            <Entry Keyboard="Numeric" Placeholder="Enter total standby time" x:Name="standbyTime" TextChanged="NumericValidation">
+                                <Entry.Behaviors>
+                                    <toolkit:NumericValidationBehavior
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="0"
+                                        MaximumDecimalPlaces="1"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Button
+                         BackgroundColor="{DynamicResource Primary}"
+                         Text="Allocate Time +" 
+                         FontAttributes="Bold"
+                         FontSize="15" 
+                         CornerRadius="10"
+                         HorizontalOptions="Center"/>
+                </StackLayout>
+          </Frame>
         </Grid>
     </ScrollView>
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+    </ContentPage.Resources>
 </ContentPage>

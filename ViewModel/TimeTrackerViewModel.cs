@@ -23,83 +23,138 @@ namespace TestApplication.ViewModel
             get { return _model.FirstArrival; }
             set
             {
-                if (value == DateTime.MinValue)
+                if (value != DateTime.MinValue)
                 {
-                    throw new ArgumentNullException("First Arrival is a required field");
+                    _model.FirstArrival = value;
+                    OnPropertyChanged("FirstArrival");
+                    OnPropertyChanged(nameof(TotalHours));
+                    ErrorMessage = string.Empty;
                 }
-                _model.FirstArrival = value;
-                OnPropertyChanged("FirstArrival");
-                OnPropertyChanged(nameof(TotalHours));
+                else
+                {
+                    ErrorMessage = "First Arrival is a required field.";
+                }
             }
         }
+
         public DateTime FirstDeparture
         {
             get { return _model.FirstDeparture; }
             set
             {
-                _model.FirstDeparture = value;
-                OnPropertyChanged("FirstDeparture");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.FirstDeparture = value;
+                    OnPropertyChanged("FirstDeparture");
+                    OnPropertyChanged(nameof(TotalHours));
+                    ErrorMessage = string.Empty;
+                }
+                else
+                {
+                    ErrorMessage = "First Departure is a required field.";
+                }
             }
         }
-        public DateTime SecondArrival
+        public DateTime? SecondArrival
         {
-            get { return (DateTime)_model.SecondArrival; }
+            get { return _model.SecondArrival; }
             set
             {
-                _model.SecondArrival = value;
-                OnPropertyChanged("SecondArrival");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.SecondArrival = value;
+                    OnPropertyChanged("SecondArrival");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.SecondArrival = null;
+                }
             }
         }
-        public DateTime SecondDeparture
+        public DateTime? SecondDeparture
         {
-            get { return (DateTime)_model.SecondDeparture; }
+            get { return _model.SecondDeparture; }
             set
             {
-                _model.SecondDeparture = value;
-                OnPropertyChanged("SecondDeparture");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.SecondDeparture = value;
+                    OnPropertyChanged("SecondDeparture");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.SecondDeparture = null;
+                }
             }
         }
-        public DateTime ThirdArrival
+        public DateTime? ThirdArrival
         {
-            get { return (DateTime)_model.ThirdArrival; }
+            get { return _model.ThirdArrival; }
             set
             {
-                _model.ThirdArrival = value;
-                OnPropertyChanged("ThirdArrival");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.ThirdArrival = value;
+                    OnPropertyChanged("ThirdArrival");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.ThirdArrival = null;
+                }
             }
         }
-        public DateTime ThirdDeparture
+        public DateTime? ThirdDeparture
         {
-            get { return (DateTime)_model.ThirdDeparture; }
+            get { return _model.ThirdDeparture; }
             set
             {
-                _model.ThirdDeparture = value;
-                OnPropertyChanged("ThirdDeparture");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.ThirdDeparture = value;
+                    OnPropertyChanged("ThirdDeparture");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.ThirdDeparture = null;
+                }
             }
         }
-        public DateTime FourthArrival
+        public DateTime? FourthArrival
         {
-            get { return (DateTime)_model.FourthArrival; }
+            get { return _model.FourthArrival; }
             set
             {
-                _model.FourthArrival = value;
-                OnPropertyChanged("FourthArrival");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.FourthArrival = value;
+                    OnPropertyChanged("FourthArrival");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.FourthArrival = null;
+                }
             }
         }
-        public DateTime FourthDeparture
+        public DateTime? FourthDeparture
         {
-            get { return (DateTime)_model.FourthDeparture; }
+            get { return _model.FourthDeparture; }
             set
             {
-                _model.FourthDeparture = value;
-                OnPropertyChanged("FourthDeparture");
-                OnPropertyChanged(nameof(TotalHours));
+                if (value != DateTime.MinValue)
+                {
+                    _model.FourthDeparture = value;
+                    OnPropertyChanged("FourthDeparture");
+                    OnPropertyChanged(nameof(TotalHours));
+                }
+                else
+                {
+                    _model.FourthDeparture = null;
+                }
             }
         }
         protected void OnPropertyChanged(string propertyName)
@@ -109,15 +164,43 @@ namespace TestApplication.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         public TimeSpan TotalHours
         {
             get
             {
-                var earliestArrival = new[] { FirstArrival, SecondArrival, ThirdArrival, FourthArrival }.Min();
-                var latestDeparture = new[] { FirstDeparture, SecondDeparture, ThirdDeparture, FourthDeparture }.Max();
+                var arrivals = new[] { FirstArrival, SecondArrival, ThirdArrival, FourthArrival }
+                    .Where(a => a != null)
+                    .Select(a => (DateTime)a);
+                var departures = new[] { FirstDeparture, SecondDeparture, ThirdDeparture, FourthDeparture }
+                    .Where(d => d != null)
+                    .Select(d => (DateTime)d);
+
+                var earliestArrival = arrivals.Min();
+                var latestDeparture = departures.Max();
 
                 return latestDeparture - earliestArrival;
             }
         }
-    }   
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
+        }
+        public int _totalMileage;
+        public int TotalMileage
+        {
+            get { return _totalMileage; }
+            set
+            {
+                _totalMileage = value;
+                OnPropertyChanged("TotalMileage");
+            }
+        }
+    }
 }

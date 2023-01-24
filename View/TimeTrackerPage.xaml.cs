@@ -10,9 +10,17 @@ public partial class TimeTrackerPage : ContentPage
 		BindingContext = new TimeTrackerViewModel();
 	}
 
-    private void DateTimePicker_SelectedDateTimeChanged(object sender, EventArgs e)
+    private void NumericValidation(object sender, TextChangedEventArgs e)
     {
-        var viewModel = BindingContext as TimeTrackerViewModel;
-        viewModel.FirstArrival = firstArrival.SelectedDateTime;
+        if (String.IsNullOrEmpty(e.NewTextValue) || !Int32.TryParse(e.NewTextValue, out int result))
+        {
+            //display error message or not.
+            if (!String.IsNullOrEmpty(e.NewTextValue))
+            {
+                DisplayAlert("Error", "Invalid entry, please enter an integer.", "OK");
+            }
+        }
     }
+
+
 }
