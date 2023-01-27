@@ -17,6 +17,8 @@ namespace TestApplication.ViewModel
         public TimeTrackerViewModel()
         {
             _model = new TimeTracker();
+            _model.FirstArrival = DateTime.Today;
+            _model.FirstDeparture = DateTime.Today;
         }
         public DateTime FirstArrival
         {

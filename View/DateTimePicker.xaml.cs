@@ -10,7 +10,8 @@ public partial class DateTimePicker : ContentView, INotifyPropertyChanged
 	}
 
     public static readonly BindableProperty DateTimeProperty =
-    BindableProperty.Create(nameof(DateTime), typeof(DateTime), typeof(DateTimePicker), default(DateTime), BindingMode.TwoWay);
+     BindableProperty.Create(nameof(DateTime), typeof(DateTime), typeof(DateTimePicker), DateTime.Now, BindingMode.TwoWay);
+
 
     public event EventHandler DateTimeUpdated;
 
@@ -33,7 +34,7 @@ public partial class DateTimePicker : ContentView, INotifyPropertyChanged
     }
     private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        DateTime = new DateTime(e.NewDate.Year, e.NewDate.Month, e.NewDate.Day);
+        DateTime = new DateTime(e.NewDate.Year, e.NewDate.Month, e.NewDate.Day, timePicker.Time.Hours, timePicker.Time.Minutes, 0);
         DateTimeUpdated?.Invoke(this, EventArgs.Empty);
     }
 
